@@ -1,2 +1,2 @@
 # Stay-to-me
-New repo
+New repository, sana gumana

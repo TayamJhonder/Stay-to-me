@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JHONDER TAYAM</title>
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900&display=swap" rel="stylesheet">
+<style>
+/* General Reset */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+/* Fullscreen adjustments for all devices */
+html, body {
+width: 100%;
+height: 100%;
+background-color: #0f2a44;
+font-family: 'Montserrat', sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+}
+
+.container {
+text-align: center;
+position: relative;
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+overflow: hidden;
+}
+
+/* Custom cursor animation */
+.custom-cursor {
+width: 20px;
+height: 20px;
+border: 2px solid #4cd3f9;
+border-radius: 50%;
+position: absolute;
+pointer-events: none;
+transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+z-index: 9999;
+transform: translate(-50%, -50%);
+}
+
+/* Heartbeat effect */
+@keyframes heartbeat {
+0%, 100% {
+transform: scale(1);
+box-shadow: 0 0 10px #4cd3f9, 0 0 20px #4cd3f9;
+}
+20% {
+transform: scale(1.5);
+box-shadow: 0 0 15px #4cd3f9, 0 0 30px #4cd3f9;
+}
+40% {
+transform: scale(1.2);
+box-shadow: 0 0 12px #4cd3f9, 0 0 24px #4cd3f9;
+}
+60% {
+transform: scale(1.5);
+box-shadow: 0 0 15px #4cd3f9, 0 0 30px #4cd3f9;
+}
+80% {
+transform: scale(1.2);
+box-shadow: 0 0 12px #4cd3f9, 0 0 24px #4cd3f9;
+}
+}
+
+.custom-cursor.beating {
+animation: heartbeat 0.6s ease-in-out infinite;
+}
+
+/* Larger Hexagon Shape */
+.hexagon {
+width: 25vmin;
+height: 25vmin;
+background-color: #3498db;
+clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+margin: 10px auto;
+background-image: url('pogi.jpg');
+/* Replace with the correct image path */
+background-size: cover;
+background-position: center;
+}
+
+.name {
+font-size: 6vmin;
+margin-top: 10px;
+/* Reduced the margin for closeness */
+color: #4cd3f9;
+}
+
+.title {
+font-size: 3vmin;
+color: #669df5;
+margin-bottom: 20px;
+/* Added margin-bottom to separate from icons */
+}
+
+.icons {
+display: flex;
+justify-content: space-around;
+margin-top: 20px;
+}
+
+.icon {
+width: 8vmin;
+height: 8vmin;
+background-size: cover;
+}
+
+.gear {
+background-image: url('gear-icon.png');
+/* Placeholder: Use a proper gear icon */
+}
+
+.building {
+background-image: url('building-icon.png');
+/* Placeholder: Use a proper building icon */
+}
+
+.fist {
+background-image: url('fist-icon.png');
+/* Placeholder: Use a proper fist icon */
+}
+
+/* Particle Effect */
+.particles {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 300px;
+background: rgba(255, 255, 255, 0.2);
+overflow: hidden;
+}
+
+.particle {
+position: absolute;
+top: 0;
+width: 2px;
+height: 100px;
+background-color: rgba(255, 255, 255, 0.4);
+animation: fall linear infinite;
+}
+
+@keyframes fall {
+from {
+transform: translateY(-100px);
+}
+to {
+transform: translateY(100vh);
+}
+}
+
+/* Navigation Bar Styles */
+.bars {
+cursor: pointer;
+position: absolute;
+top: 5%;
+right: 5%;
+width: 30px;
+height: 20px;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+}
+
+.bars div {
+width: 30px;
+height: 4px;
+background: #fff;
+/* White color for the burger lines */
+}
+
+.bars div::before,
+.bars div::after {
+content: '';
+position: absolute;
+width: 30px;
+height: 4px;
+background: #fff;
+/* White color for the burger lines */
+}
+
+.bars div::before {
+margin-top: 9px;
+}
+
+.bars div::after {
+margin-top: 18px;
+}
+
+nav {
+position: absolute;
+width: 100%;
+height: 30px;
+background: #000;
+display: flex;
+justify-content: center;
+align-items: center;
+right: -200vw;
+}
+
+nav ul {
+list-style: none;
+}
+
+nav ul li {
+margin: 50px 0;
+}
+
+nav ul li a {
+color: #fafafa;
+font-size: 2em;
+text-decoration: none;
+font-weight: 500;
+position: relative;
+opacity: 0;
+pointer-events: none;
+}
+
+nav ul li a:after {
+content: '';
+width: 100%;
+position: absolute;
+height: 3px;
+border-radius: 5px;
+background: #fff;
+bottom: -10px;
+left: 0;
+transform-origin: left;
+transition: transform .5s ease;
+transform: scaleX(0);
+}
+
+nav ul li a:hover:after {
+transform: scaleX(1);
+}
+
+nav .close {
+width: 30px;
+height: 30px;
+position: absolute;
+top: 6%;
+right: 5%;
+cursor: pointer;
+opacity: 0;
+pointer-events: none;
+}
+
+nav h2 {
+position: absolute;
+top: 5%;
+left: 5%;
+opacity: 0;
+pointer-events: none;
+color: #fff;
+font-size: 2em;
+animation: glitch-anim 0.75s infinite;
+/* Faster animation */
+background: linear-gradient(90deg, rgba(255, 0, 0, 0.7) 25%, rgba(0, 255, 255, 0.7) 50%, rgba(255, 0, 255, 0.7) 75%);
+background-size: 400% 400%;
+text-shadow: 0 0 15px rgba(255, 0, 0, 0.7), 0 0 20px rgba(0, 255, 255, 0.7);
+}
+
+nav .close div::before,
+nav .close div::after {
+content: '';
+position: absolute;
+width: 30px;
+height: 4px;
+background: #fff;
+transition: background .5s ease;
+}
+
+nav .close div::before {
+transform: rotate(-45deg);
+}
+
+nav .close div::after {
+transform: rotate(45deg);
+}
+
+nav .close:hover div::before,
+nav .close:hover div::after {
+background: rgb(209, 3, 3);
+}
+
+/* Glitch Animation Keyframes */
+@keyframes glitch-anim {
+0% {
+transform: translate(0, 0);
+opacity: 1;
+}
+10% {
+transform: translate(-3px, -3px);
+opacity: 0.8;
+}
+20% {
+transform: translate(3px, 3px);
+opacity: 0.6;
+}
+30% {
+transform: translate(-5px, 5px);
+opacity: 0.4;
+}
+40% {
+transform: translate(5px, -5px);
+opacity: 0.6;
+}
+50% {
+transform: translate(-3px, 3px);
+opacity: 0.8;
+}
+60% {
+transform: translate(3px, -3px);
+opacity: 0.4;
+}
+70% {
+transform: translate(-5px, -5px);
+opacity: 0.6;
+}
+80% {
+transform: translate(5px, 5px);
+opacity: 0.8;
+}
+90% {
+transform: translate(-3px, 3px);
+opacity: 1;
+}
+100% {
+transform: translate(0, 0);
+opacity: 1;
+}
+}
+
+@media (max-width: 992px) {
+h1 {
+font-size: 25px;
+}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="hexagon"></div>
+<h1 class="name">JHONDER TAYAM</h1>
+<p class="title">
+NEWBIE WEB DEV
+</p>
+
+<div class="icons">
+<div class="icon gear"></div>
+<div class="icon building"></div>
+<div class="icon fist"></div>
+</div>
+
+<div class="custom-cursor"></div>
+</div>
+
+<div class="bars">
+<div></div>
+</div>
+<nav>
+<h2>Else If Code</h2>
+<div class="close">
+<div></div>
+</div>
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Projects</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+</nav>
+
+<!-- Autoplay Audio -->
+<audio src="staywithme.mp3" autoplay></audio>
+
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js"></script>
+<script>
+// Particle Effect
+document.addEventListener('DOMContentLoaded', () => {
+const container = document.querySelector('.container');
+
+// Create particles
+for (let i = 0; i < 100; i++) {
+const particle = document.createElement('div');
+particle.classList.add('particle');
+particle.style.left = `${Math.random() * 100}vw`;
+particle.style.animationDuration = `${2 + Math.random() * 3}s`;
+container.appendChild(particle);
+}
+});
+
+// Custom Cursor Logic
+const cursor = document.querySelector('.custom-cursor');
+let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
+const speed = 0.1;
+
+const updateCursorPosition = (e) => {
+mouseX = e.pageX;
+mouseY = e.pageY;
+};
+
+const animateCursor = () => {
+cursorX += (mouseX - cursorX) * speed;
+cursorY += (mouseY - cursorY) * speed;
+cursor.style.left = `${cursorX}px`;
+cursor.style.top = `${cursorY}px`;
+requestAnimationFrame(animateCursor);
+};
+
+document.addEventListener('mousemove', updateCursorPosition);
+document.addEventListener('touchmove', (e) => {
+const touch = e.touches[0];
+mouseX = touch.pageX;
+mouseY = touch.pageY;
+});
+
+let isBeating = false;
+
+const startHeartbeat = () => {
+if (!isBeating) {
+cursor.classList.add('beating');
+isBeating = true;
+}
+};
+
+const stopHeartbeat = () => {
+cursor.classList.remove('beating');
+isBeating = false;
+};
+
+document.addEventListener('mousedown', startHeartbeat);
+document.addEventListener('mouseup', stopHeartbeat);
+document.addEventListener('touchstart', startHeartbeat);
+document.addEventListener('touchend', stopHeartbeat);
+
+// GSAP Animation
+const open = document.querySelector('.bars');
+const close = document.querySelector('.close');
+var tl = gsap.timeline({ defaults: { duration: 1, ease: 'expo.inOut' } });
+
+open.addEventListener('click', () => {
+if (tl.reversed()) {
+tl.play();
+} else {
+tl.to('nav', { right: 0 })
+.to('nav', { height: '100vh' }, '-=.1')
+.to('nav ul li a', { opacity: 1, pointerEvents: 'all', stagger: .2 }, '-=.8')
+.to('.close', { opacity: 1, pointerEvents: 'all' }, "-=.8")
+.to('nav h2', { opacity: 1 }, '-=1');
+}
+});
+
+close.addEventListener('click', () => {
+tl.reverse();
+});
+
+animateCursor();
+</script>
+</body>
+</html>
